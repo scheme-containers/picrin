@@ -10,8 +10,8 @@ RUN git init \
  && git reset --hard FETCH_HEAD
 RUN make
 RUN make install
-RUN { echo -n "Picrin " && git describe --dirty --always --tags; } \
-  >/usr/local/share/picrin-version
+COPY write-scheme-version write-scheme-version
+RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
 FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
